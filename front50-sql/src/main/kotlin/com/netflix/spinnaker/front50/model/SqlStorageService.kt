@@ -101,7 +101,8 @@ class SqlStorageService(
         ctx
           .select(
             field("body", String::class.java),
-            field("created_at", Long::class.java)
+            field("created_at", Long::class.java),
+            field("last_modified_at", Long::class.java),
           )
           .from(definitionsByType[objectType]!!.tableName)
           .where(
@@ -118,6 +119,7 @@ class SqlStorageService(
       objectType.clazz as Class<T>
     ).apply {
       this.createdAt = result.get(field("created_at", Long::class.java))
+      this.lastModified = result.get(field("last_modified_at", Long::class.java))
     }
   }
 
